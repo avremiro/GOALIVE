@@ -1,4 +1,5 @@
-import { Link, Route, Routes } from "react-router-dom";
+import { NavLink, Route, Routes } from "react-router-dom";
+import { useState } from "react";
 import Home from "./pages/Home";
 import LiveMatches from "./pages/LiveMatches";
 import TeamHub from "./pages/TeamHub";
@@ -6,18 +7,47 @@ import Auth from "./pages/Auth";
 import Predictions from "./pages/Predictions";
 import Quiz from "./pages/Quiz";
 
+const navItems = [
+  { to: "/", label: "משחקים" },
+  { to: "/live", label: "לייב" },
+  { to: "/team", label: "הקבוצה שלי" },
+  { to: "/quiz", label: "חידונים" },
+  { to: "/predictions", label: "תחזיות" },
+  { to: "/auth", label: "חשבון" }
+] as const;
+
 const App = () => {
+  const [showImageLogo, setShowImageLogo] = useState(true);
+
   return (
     <div className="app-shell">
       <header className="top-bar">
-        <h1>Football App</h1>
-        <nav>
-          <Link to="/">בית</Link>
-          <Link to="/live">לייב</Link>
-          <Link to="/team">הקבוצה שלי</Link>
-          <Link to="/quiz">חידונים</Link>
-          <Link to="/predictions">תחזיות</Link>
-          <Link to="/auth">התחברות</Link>
+        <div className="brand-block">
+          {showImageLogo ? (
+            <img
+              src="/goal-live-logo.png"
+              alt="GOAL LIVE logo"
+              className="brand-image-logo"
+              onError={() => setShowImageLogo(false)}
+            />
+          ) : (
+            <div className="brand-logo">GL</div>
+          )}
+          <div>
+            <h1>GOAL LIVE</h1>
+            <p>תוצאות, חדשות וליגות מובילות</p>
+          </div>
+        </div>
+        <nav className="top-nav">
+          {navItems.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+            >
+              {item.label}
+            </NavLink>
+          ))}
         </nav>
       </header>
 
@@ -31,6 +61,18 @@ const App = () => {
           <Route path="/auth" element={<Auth />} />
         </Routes>
       </main>
+
+      <nav className="bottom-nav">
+        {navItems.slice(0, 5).map((item) => (
+          <NavLink
+            key={`bottom-${item.to}`}
+            to={item.to}
+            className={({ isActive }) => (isActive ? "bottom-link active" : "bottom-link")}
+          >
+            {item.label}
+          </NavLink>
+        ))}
+      </nav>
     </div>
   );
 };
