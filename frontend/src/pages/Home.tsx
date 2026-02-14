@@ -1,21 +1,33 @@
 import { useEffect, useState } from "react";
 import { api } from "../lib/api";
-import type { Match, NewsArticle } from "../types";
+import type { Match, NewsArticle, StandingRow } from "../types";
 
 const featuredLeagues = ["Premier League", "La Liga", "Ligat HaAl"];
 
 const Home = () => {
   const [matchesByLeague, setMatchesByLeague] = useState<Record<string, Match[]>>({});
+  const [standingsByLeague, setStandingsByLeague] = useState<Record<string, StandingRow[]>>({});
   const [news, setNews] = useState<NewsArticle[]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const load = async () => {
       try {
-        const [premierLeague, laLiga, ligatHaAl, trending] = await Promise.all([
+        const [
+          premierLeague,
+          laLiga,
+          ligatHaAl,
+          premierTable,
+          laLigaTable,
+          ligatHaAlTable,
+          trending
+        ] = await Promise.all([
           api.get<Match[]>("/matches?league=Premier League"),
           api.get<Match[]>("/matches?league=La Liga"),
           api.get<Match[]>("/matches?league=Ligat HaAl"),
+          api.get<StandingRow[]>("/matches/table?league=Premier League"),
+          api.get<StandingRow[]>("/matches/table?league=La Liga"),
+          api.get<StandingRow[]>("/matches/table?league=Ligat HaAl"),
           api.get<NewsArticle[]>("/news/trending")
         ]);
 
@@ -23,6 +35,11 @@ const Home = () => {
           "Premier League": premierLeague,
           "La Liga": laLiga,
           "Ligat HaAl": ligatHaAl
+        });
+        setStandingsByLeague({
+          "Premier League": premierTable,
+          "La Liga": laLigaTable,
+          "Ligat HaAl": ligatHaAlTable
         });
         setNews(trending);
       } catch (err) {
@@ -57,6 +74,20 @@ const Home = () => {
                 </div>
               ))
             )}
+            <div className="mini-table">
+              <div className="mini-table-head">
+                <span>#</span>
+                <span>קבוצה</span>
+                <span>נק'</span>
+              </div>
+              {(standingsByLeague[league] ?? []).slice(0, 5).map((row) => (
+                <div className="mini-table-row" key={`${league}-${row.teamId}`}>
+                  <span>{row.rank}</span>
+                  <span>{row.teamName}</span>
+                  <span>{row.points}</span>
+                </div>
+              ))}
+            </div>
           </article>
         ))}
 

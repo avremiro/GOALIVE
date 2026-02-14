@@ -226,6 +226,33 @@ button:hover {
   padding-top: 0.55rem;
 }
 
+.mini-table {
+  margin-top: 0.7rem;
+  border-top: 1px solid #e5eaf5;
+  padding-top: 0.55rem;
+}
+
+.mini-table-head,
+.mini-table-row {
+  display: grid;
+  grid-template-columns: 28px 1fr 42px;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.mini-table-head {
+  color: #61708d;
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.mini-table-row {
+  font-size: 0.84rem;
+  padding: 0.2rem 0;
+  border-top: 1px dashed #edf1f8;
+}
+
 .bottom-nav {
   position: fixed;
   bottom: 0.9rem;

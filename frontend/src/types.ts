@@ -43,3 +43,18 @@ export type User = {
   username: string;
   favoriteTeamIds: number[];
 };
+
+export type StandingRow = {
+  rank: number;
+  teamId: number;
+  teamName: string;
+  played: number;
+  won: number;
+  draw: number;
+  lost: number;
+  gf: number;
+  ga: number;
+  gd: number;
+  points: number;
+  form: string;
+};
