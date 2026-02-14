@@ -9,5 +9,8 @@ export const env = {
   nodeEnv: process.env.NODE_ENV ?? "development",
   port: toNumber(process.env.PORT, 5000),
   corsOrigin: process.env.CORS_ORIGIN ?? "http://localhost:5173",
-  jwtSecret: process.env.JWT_SECRET ?? "dev-secret-change-me"
+  jwtSecret: process.env.JWT_SECRET ?? "dev-secret-change-me",
+  rapidApiKey: process.env.RAPIDAPI_KEY ?? "",
+  rapidApiFootballHost:
+    process.env.RAPIDAPI_FOOTBALL_HOST ?? "api-football-v1.p.rapidapi.com"
 };
