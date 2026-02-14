@@ -1,5 +1,16 @@
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL?.toString() ?? "http://localhost:5000/api/v1";
+const resolveApiBaseUrl = () => {
+  const fromEnv = import.meta.env.VITE_API_URL?.toString();
+  if (fromEnv && fromEnv.length > 0) return fromEnv;
+
+  // In production, prefer same-origin API path when env var is missing.
+  if (typeof window !== "undefined" && window.location?.origin) {
+    return `${window.location.origin}/api/v1`;
+  }
+
+  return "http://localhost:5000/api/v1";
+};
+
+const API_BASE_URL = resolveApiBaseUrl();
 
 type HttpMethod = "GET" | "POST";
 

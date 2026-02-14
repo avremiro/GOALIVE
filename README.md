@@ -103,3 +103,31 @@ football-app/
 
 - הסקפולד נועד להתחלה מהירה ונקייה.
 - אפשר להוסיף בהמשך Redux Toolkit, Tailwind, Socket.io, ו-PWA לפי האיפיון.
+
+## פריסה לפרודקשן (Backend + Frontend)
+
+### 1) Backend על Railway
+
+1. ב-Railway ליצור `New Project` מתוך ה-GitHub repo.
+2. להגדיר `Root Directory` לשירות: `backend`
+3. להוסיף משתני סביבה:
+   - `NODE_ENV=production`
+   - `PORT=5000`
+   - `JWT_SECRET=...`
+   - `RAPIDAPI_KEY=...`
+   - `RAPIDAPI_FOOTBALL_HOST=livescore-football.p.rapidapi.com` (או ספק אחר)
+   - `CORS_ORIGIN=https://<your-frontend>.vercel.app`
+4. לבצע Deploy ולקבל דומיין ציבורי, לדוגמה: `https://goalive-api.up.railway.app`
+
+### 2) Frontend על Vercel
+
+ב-Project Settings -> Environment Variables:
+
+- `VITE_API_URL=https://<your-backend-domain>/api/v1`
+
+לאחר מכן לבצע Redeploy.
+
+### 3) בדיקת חיבור
+
+- Backend health: `https://<your-backend-domain>/api/v1/health`
+- Frontend: פתיחת האתר ב-Vercel ובדיקה שטבלאות/לייב נטענים ללא שגיאות.
