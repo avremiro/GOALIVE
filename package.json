@@ -1,0 +1,21 @@
+{
+  "name": "football-app",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Football Web App monorepo (frontend + backend)",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace backend",
+    "dev:frontend": "npm run dev --workspace frontend",
+    "dev:backend": "npm run dev --workspace backend",
+    "build": "npm run build --workspace frontend && npm run build --workspace backend",
+    "lint": "npm run lint --workspace frontend && npm run lint --workspace backend",
+    "type-check": "npm run type-check --workspace frontend && npm run type-check --workspace backend"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
